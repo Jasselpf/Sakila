@@ -122,107 +122,141 @@ begin
         last_update TEXT
     );
 
-    comment on table raw.city is 'describe la informacion del país del cliente';
 
-    drop table if exists raw.customer ;
+    raise notice 'populating customers';
+    drop table if exists cleaned.customers;
 
-
-    create table raw.customer (
-        customer_id TEXT,
-        store_id TEXT,
-        first_name TEXT,
-        last_name TEXT,
-        email TEXT,
-        address_id TEXT,
-        activebool TEXT,
-        create_date TEXT,
-        last_update TEXT,
-        active TEXT
+    create table cleaned.customers as(
+	  select
+        customer_id::int customer,
+        store_id::int store,
+        lower(first_name) as first_name,
+        lower(last_name) as last_name,
+        lower(email) as email,
+        address_id::int address,
+        0 as activebool,
+		to_timestamp(create_date, 'YYYY-MM-DD HH24:MI:SS') as create_date,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update,
+        active::int active
+	  from raw.customer
     );
 
-    comment on table raw.customer is 'describe la informacion del cliente';
+    create index cleaned_customers_customer_ix on cleaned.customers(customer);
+    create index cleaned_customers_store_ix on cleaned.customers(store);
+	create index cleaned_customers_first_name_ix on cleaned.customers(first_name);
+	create index cleaned_customers_last_name_ix on cleaned.customers(last_name);
+	create index cleaned_customers_email_ix on cleaned.customers(email);
+	create index cleaned_customers_address_ix on cleaned.customers(address);
+	
+	
+	raise notice 'populating inventories';
+    drop table if exists raw.inventories;
 
-    drop table if exists raw.inventory ;
-
-
-    create table raw.inventory (
-        inventory_id TEXT,
-        film_id TEXT,
-        store_id TEXT,
-        last_update TEXT
+    create table cleaned.inventories as(
+	  select
+        inventory_id::int inventory,
+        film_id::int film,
+        store_id::int store,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+	  from raw.inventory
     );
 
-    comment on table raw.inventory is 'relaciona la pelicula con la tienda y el estado de la renta';
+    create index cleaned_inventories_inventory_ix on cleaned.inventories(inventory);
+	create index cleaned_inventories_film_ix on cleaned.inventories(film);
+	    
+		
+    raise notice 'populating languages';
+    drop table if exists cleaned.languages;
 
-
-    drop table if exists raw.language ;
-
-
-    create table raw.language (
-        language_id TEXT,
-        name TEXT,
-        last_update TEXT
+    create table cleaned.languages as(
+	  select
+        language_id::int idiom,
+		lower(name) as name,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+	  from raw.language
     );
 
-    comment on table raw.language is 'describe el idioma de la pelicula';
+    comment on column cleaned.languages.idiom is 'Se usó idiom en lugar de language ya que este último es función de POSTGRESQL';
+
+    raise notice 'populating payments';
+    drop table if exists cleaned.payments ;
+
+    create table cleaned.payments as(
+	  select
+        payment_id::int payment,
+        customer_id::int customer,
+        staff_id::int staff,
+        rental_id::int rental,
+        amount::real amount,
+		to_timestamp(payment_date, 'YYYY-MM-DD HH24:MI:SS') as payment_date
+	  from raw.payment
+    );
+	
+	create index cleaned_payments_payment_ix on cleaned.payments(payment);
+	create index cleaned_payments_customer_ix on cleaned.payments(customer);
+	create index cleaned_payments_rental_ix on cleaned.payments(rental);
+	create index cleaned_payments_amount_ix on cleaned.payments(amount);
+	create index cleaned_payments_payment_date_ix on cleaned.payments(payment_date);
 
 
-    drop table if exists raw.payment ;
+    raise notice 'populating rentals';
+    drop table if exists cleaned.rentals cascade;
 
-    create table raw.payment (
-        payment_id TEXT,
-        customer_id TEXT,
-        staff_id TEXT,
-        rental_id TEXT,
-        amount TEXT,
-        payment_date TEXT
+    create table cleaned.rentals as(
+	  select
+        rental_id::int rental,
+        to_timestamp(rental_date, 'YYYY-MM-DD HH24:MI:SS') as rental_date,
+        inventory_id::int inventory,
+        customer_id::int customer,
+		to_timestamp(return_date, 'YYYY-MM-DD HH24:MI:SS') as return_date,
+        staff_id::int staff,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+	  from raw.rental
     );
 
-    comment on table raw.payment is 'describe el pago de la renta';
+	create index cleaned_rentals_rental_date_ix on cleaned.rentals(rental_date);
+	create index cleaned_rentals_inventory_ix on cleaned.rentals(inventory);
+	create index cleaned_rentals_customer_ix on cleaned.rentals(customer);
+	create index cleaned_rentals_return_date_ix on cleaned.rentals(return_date);
+	
+    comment on column cleaned.rental.rental_date is 'Se definió como TIMESTAMP';
+	comment on column cleaned.rental.return_date is 'Se definió como TIMESTAMP';
 
+    raise notice 'populating staff';
+    drop table if exists cleaned.staff cascade;
 
-    drop table if exists raw.rental ;
-
-    create table raw.rental (
-        rental_id TEXT,
-        rental_date TEXT,
-        inventory_id TEXT,
-        customer_id TEXT,
-        return_date TEXT,
-        staff_id TEXT,
-        last_update TEXT
+    create table cleaned.staff as(
+	  select
+        staff_id::int as staff,
+        lower(first_name) as first_name,
+		lower(last_name) as last_name,
+        address_id::int as address,
+        lower(email) as email,
+        store_id::int as store,
+        active::int as active,
+        lower(username) as username,
+        password,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update,
+        0 as picture
+	  from raw.staff
     );
-
-    comment on table raw.rental is 'describe el estado de la renta';
-
-    drop table if exists raw.staff ;
-
-    create table raw.staff (
-        staff_id TEXT,
-        first_name TEXT,
-        last_name TEXT,
-        address_id TEXT,
-        email TEXT,
-        store_id TEXT,
-        active TEXT,
-        username TEXT,
-        password TEXT,
-        last_update TEXT,
-        picture TEXT
+     
+	 comment on table cleaned.staff is 'Se tienen 2 empleados únicamente';
+	 
+	 
+	raise notice 'populating stores';
+    drop table if exists cleaned.stores cascade;
+	
+	create table cleaned.stores as(
+	  select
+        store_id::int as store,
+        manager_staff_id::int as manager_staff,
+        address_id::int as address,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+	  from raw.store
     );
-
-    comment on table raw.staff is 'describe informacion del personal';
-
-    drop table if exists raw.store ;
-
-    create table raw.store (
-        store_id TEXT,
-        manager_staff_id TEXT,
-        address_id TEXT,
-        last_update TEXT
-    );
-
-    comment on table raw.store is 'describe informacion del establecimiento';
+	
+	comment on table cleaned.stores is 'Se tienen 2 tiendas únicamente';
 
     end $cleaned$;
 
