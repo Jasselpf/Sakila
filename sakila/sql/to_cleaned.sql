@@ -37,7 +37,7 @@ begin
     select
         category_id::int as category,
         lower(name) as name,
-        to_date(substring(last_update,1,10),'YY-MM-DD') as last_update
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
     from raw.category
     );
 
@@ -53,76 +53,107 @@ begin
         lower(title) as title,
         lower(description) as description,
         release_year::int as release_year,
-        language_id TEXT,
-        original_language_id TEXT,
-        rental_duration TEXT,
-        rental_rate TEXT,
-        length TEXT,
-        replacement_cost TEXT,
-        rating TEXT,
-        last_update TEXT,
-        special_features text[]
+        language_id::int as idiom,
+        0 as original_language,
+        rental_duration::int as rental_duration,
+        rental_rate::real as rental_rate,
+        length::int as length,
+        replacement_cost::real as replacement_cost,
+        lower(rating) as rating,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update,
+        special_features
+    from raw.film
     );
 
-    comment on table raw.film is 'describe la información de las peliculas y metricas de renta';
+    create index cleaned_films_film_ix on cleaned.films(film);
 
+    comment on column cleaned.films.idiom is 'En raw la columna se llama language_id';
+    comment on column cleaned.films.original_language is 'Originalmente valor nulo, se modifico a 0';
 
-    drop table if exists raw.film_actor ;
+  raise notice 'populating films_actors';
+  drop table if exists cleaned.films_actors cascade;
 
-    create table raw.film_actor (
-        actor_id TEXT,
-        film_id TEXT,
-        last_update TEXT
+  create table cleaned.films_actors as (
+    select
+        actor_id::int as actor,
+        film_id::int as film,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+    from raw.film_actor
     );
 
-    comment on table raw.film_actor is 'describe o enlaza al actor con la pelicula';
+  create index cleaned_films_actors_actor_ix on cleaned.films_actors(actor);
+  create index cleaned_films_actors_film_ix on cleaned.films_actors(film);
 
+  comment on table cleaned.films_actors is 'relacion entre actores y peliculas';
 
-    drop table if exists raw.film_category ;
+  raise notice 'populating films_categories';
+  drop table if exists cleaned.films_categories cascade;
 
-    create table raw.film_category (
-        film_id TEXT,
-        category_id TEXT,
-        last_update TEXT
+  create table cleaned.films_categories as (
+    select
+        film_id::int as film,
+        category_id::int category,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+    from raw.film_category
     );
 
-    comment on table raw.film_category is 'describe o enlaza la pelicula con una categoria';
+  create index cleaned_films_categories_category_ix on cleaned.films_actors(category);
+  create index cleaned_films_categories_film_ix on cleaned.films_actors(film);
 
-    drop table if exists raw.address ;
+  comment on table cleaned.films_categories is 'relacion pelicula con una categoria';
 
-    create table raw.address (
-        address_id TEXT,
-        address TEXT,
-        address2 TEXT,
-        district TEXT,
-        city_id TEXT,
-        postal_code TEXT,
-        phone TEXT,
-        last_update TEXT
+  raise notice 'populating addresses';
+  drop table if exists cleaned.addresses cascade;
+
+  create table cleaned.addresses as (
+    select
+        address_id::int as address,
+        lower(address) as address1,
+        0 as address2,
+        0 as district,
+        city_id::int as city,
+        postal_code::int as postal_code,
+        0 as phone,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+    from raw.address
     );
 
-    comment on table raw.address is 'describe la informacion de la direccion del cliente';
+  create index cleaned_addresses_address_ix on cleaned.addresses(address);
 
-    drop table if exists raw.city ;
+  comment on table cleaned.addresses is 'describe la informacion de la direccion del cliente';
 
-    create table raw.city (
-        city_id TEXT,
-        city TEXT,
-        country_id TEXT,
-        last_update TEXT
+  raise notice 'populating cities'
+  drop table if exists cleaned.cities cascade;
+
+  create table cleaned.cities (
+    select
+        city_id::int as city,
+        lower(city) as city_name ,
+        country_id::int as country,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+    from raw.city
     );
 
-    comment on table raw.city is 'describe la informacion de la ciudad del cliente';
+  create index cleaned_cities_city_ix on cleaned.cities(city);
+  create index cleaned_cities_country_ix on cleaned.cities(country);
 
-    drop table if exists raw.country ;
+  comment on table cleaned.cities is 'describe la informacion de la ciudad del cliente';
 
-    create table raw.country (
-        country_id TEXT,
-        country TEXT,
-        last_update TEXT
+  raise notice 'populating countries'
+  drop table if exists cleaned.countries cascade;
+
+  create table cleaned.countries as (
+    select
+        country_id::int as country,
+        lower(country) as country_name,
+        to_date(substring(last_update,1,10),'YYYY-MM-DD') as last_update
+    from raw.country
     );
 
-    comment on table raw.city is 'describe la informacion del país del cliente';
+  create index cleaned_countries_country_ix on cleaned.countries(country);
+  create index cleaned_countries_country_name_ix on cleaned.countries(country_name);
+
+  comment on table cleaned.countries is 'describe la informacion del país del cliente';
 
     drop table if exists raw.customer ;
 
