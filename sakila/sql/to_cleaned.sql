@@ -1,21 +1,23 @@
 
-\echo 'Sakila(cleaned)'
-\echo 'Programación para Ciencia de Datos'
-\echo 'Github <https://github.com/Jasselpf/Sakila>'
-\set VERBOSITY terse
-\set ON_ERROR_STOP true
+--\echo 'Sakila(cleaned)'
+--\echo 'Programación para Ciencia de Datos'
+--\echo 'Github <https://github.com/Jasselpf/Sakila>'
+--\set VERBOSITY terse
+--\set ON_ERROR_STOP true
 
-do language plpgsql $$ declare
-    exc_message text;
-    exc_context text;
-    exc_detail text;
-begin
+--do language plpgsql $$ declare
+--    exc_message text;
+--    exc_context text;
+--    exc_detail text;
+--begin
 
-  do $cleaned$ begin
+--  do $cleaned$ begin
 
-   set search_path = cleaned, public;
+create schema if not exists cleaned;
 
-  raise notice 'populating actors';
+SET search_path = cleaned,public;
+
+  --raise notice 'populating actors';
   drop table if exists cleaned.actors cascade;
 
   create table cleaned.actors as (
@@ -27,10 +29,10 @@ begin
     from raw.actor
     );
 
-  create index cleaned_actors_actor_ix on cleaned.actors (actor)
+  create index cleaned_actors_actor_ix on cleaned.actors (actor);
 
 
-  raise notice 'populating categories';
+  --raise notice 'populating categories';
   drop table if exists cleaned.categories cascade;
 
   create table cleaned.categories as (
@@ -42,9 +44,9 @@ begin
     );
 
   create index cleaned_categories_category_ix on cleaned.categories (category);
-  create index cleaned_categories_category_ix on cleaned.categories (name);
+  create index cleaned_categories_name_ix on cleaned.categories (name);
 
-  raise notice 'populating films';
+  --raise notice 'populating films';
   drop table if exists cleaned.films cascade;
 
   create table cleaned.films as (
@@ -70,7 +72,7 @@ begin
     comment on column cleaned.films.idiom is 'En raw la columna se llama language_id';
     comment on column cleaned.films.original_language is 'Originalmente valor nulo, se modifico a 0';
 
-  raise notice 'populating films_actors';
+  --raise notice 'populating films_actors';
   drop table if exists cleaned.films_actors cascade;
 
   create table cleaned.films_actors as (
@@ -86,7 +88,7 @@ begin
 
   comment on table cleaned.films_actors is 'relacion entre actores y peliculas';
 
-  raise notice 'populating films_categories';
+  --raise notice 'populating films_categories';
   drop table if exists cleaned.films_categories cascade;
 
   create table cleaned.films_categories as (
@@ -97,12 +99,12 @@ begin
     from raw.film_category
     );
 
-  create index cleaned_films_categories_category_ix on cleaned.films_actors(category);
-  create index cleaned_films_categories_film_ix on cleaned.films_actors(film);
+  create index cleaned_films_categories_category_ix on cleaned.films_categories(category);
+  create index cleaned_films_categories_film_ix on cleaned.films_categories(film);
 
   comment on table cleaned.films_categories is 'relacion pelicula con una categoria';
 
-  raise notice 'populating addresses';
+  --raise notice 'populating addresses';
   drop table if exists cleaned.addresses cascade;
 
   create table cleaned.addresses as (
@@ -122,10 +124,10 @@ begin
 
   comment on table cleaned.addresses is 'describe la informacion de la direccion del cliente';
 
-  raise notice 'populating cities'
+  --raise notice 'populating cities'
   drop table if exists cleaned.cities cascade;
 
-  create table cleaned.cities (
+  create table cleaned.cities as (
     select
         city_id::int as city,
         lower(city) as city_name ,
@@ -139,7 +141,7 @@ begin
 
   comment on table cleaned.cities is 'describe la informacion de la ciudad del cliente';
 
-  raise notice 'populating countries'
+  --raise notice 'populating countries'
   drop table if exists cleaned.countries cascade;
 
   create table cleaned.countries as (
@@ -155,7 +157,7 @@ begin
 
   comment on table cleaned.countries is 'describe la informacion del país del cliente';
 
-    raise notice 'populating customers';
+    --raise notice 'populating customers';
     drop table if exists cleaned.customers;
 
  create table cleaned.customers as(
@@ -181,10 +183,10 @@ begin
 	create index cleaned_customers_address_ix on cleaned.customers(address);
 	
 	
-	raise notice 'populating inventories';
-    drop table if exists raw.inventories;
+	--raise notice 'populating inventories';
+    drop table if exists cleaned.inventories;
 
- create table cleaned.inventories as(
+    create table cleaned.inventories as(
 	  select
         inventory_id::int inventory,
         film_id::int film,
@@ -197,7 +199,7 @@ begin
 	create index cleaned_inventories_film_ix on cleaned.inventories(film);
 	    
 		
-    raise notice 'populating languages';
+    --raise notice 'populating languages';
     drop table if exists cleaned.languages;
 
     create table cleaned.languages as(
@@ -210,7 +212,7 @@ begin
 
     comment on column cleaned.languages.idiom is 'Se usó idiom en lugar de language ya que este último es función de POSTGRESQL';
 
-    raise notice 'populating payments';
+    --raise notice 'populating payments';
     drop table if exists cleaned.payments ;
 
     create table cleaned.payments as(
@@ -231,7 +233,7 @@ begin
 	create index cleaned_payments_payment_date_ix on cleaned.payments(payment_date);
 
 
-    raise notice 'populating rentals';
+    --raise notice 'populating rentals';
     drop table if exists cleaned.rentals cascade;
 
     create table cleaned.rentals as(
@@ -251,10 +253,10 @@ begin
 	create index cleaned_rentals_customer_ix on cleaned.rentals(customer);
 	create index cleaned_rentals_return_date_ix on cleaned.rentals(return_date);
 	
-    comment on column cleaned.rental.rental_date is 'Se definió como TIMESTAMP';
-	comment on column cleaned.rental.return_date is 'Se definió como TIMESTAMP';
+    comment on column cleaned.rentals.rental_date is 'Se definió como TIMESTAMP';
+	comment on column cleaned.rentals.return_date is 'Se definió como TIMESTAMP';
 
-    raise notice 'populating staff';
+    --raise notice 'populating staff';
     drop table if exists cleaned.staff cascade;
 
     create table cleaned.staff as(
@@ -276,7 +278,7 @@ begin
 	 comment on table cleaned.staff is 'Se tienen 2 empleados únicamente';
 	 
 	 
-	raise notice 'populating stores';
+	--raise notice 'populating stores';
     drop table if exists cleaned.stores cascade;
 	
 	create table cleaned.stores as(
@@ -290,11 +292,11 @@ begin
 	
 	comment on table cleaned.stores is 'Se tienen 2 tiendas únicamente';
 
-    end $cleaned$;
+--    end $cleaned$;
 
-    exception when others then
-    get stacked diagnostics exc_message = message_text;
-    get stacked diagnostics exc_context = pg_exception_context;
-    get stacked diagnostics exc_detail = pg_exception_detail;
-    raise exception E'\n------\n%\n%\n------\n\nCONTEXT:\n%\n', exc_message, exc_detail, exc_context;
-end $$; 
+--    exception when others then
+--    get stacked diagnostics exc_message = message_text;
+--    get stacked diagnostics exc_context = pg_exception_context;
+--    get stacked diagnostics exc_detail = pg_exception_detail;
+--    raise exception E'\n------\n%\n%\n------\n\nCONTEXT:\n%\n', exc_message, exc_detail, exc_context;
+--end $$; 
