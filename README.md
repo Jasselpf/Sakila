@@ -2,185 +2,192 @@
 
 ## Fuente de Datos
 The [Sakila Database - DVD rental store](https://github.com/jOOQ/jOOQ/tree/master/jOOQ-examples/Sakila)
-The Sakila example database was originally developed by Mike Hillyer of the MySQL AB documentation team. 
-It was ported to other databases by DB Software Laboratory
 
-License: [BSD Copyright DB Software Laboratory](http://www.etl-tools.com)
+The Sakila example database was originally developed by Mike Hillyer of the MySQL AB documentation team. <br/>
+La base de datos Sakila fue desarrollada originalmente por Mike Hillyer del equipo de documentación de MySQL AB <br/>
+
+It was ported to other databases by DB Software Laboratory <br/>
+Fue convertida a otras bases de datos por DB Software Laboratory <br/>
+
+Licencia: [BSD Copyright DB Software Laboratory](http://www.etl-tools.com)
 
 ## Estructura de la Base de Datos
 
 ### Actor
-**actor_id** identificador único de cada actor \\
-**first_name** nombre del actor \\
-**last_name** apellido del actor \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **actor_id** identificador único de cada actor <br/>
+- **first_name** nombre del actor <br/>
+- **last_name** apellido del actor <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### Address
-**address_id** identificador único de domicilio \\
-**address** dirección \\
-**address2** columna opcional para dirección adicional o datos adicionales de la dirección. En este caso esta vacía para todos los registros \\
-**district** distrito en el que se ubica la dirección. Está vacío para todos los registros \\
-**city_id** identificador único de la ciudad en la que se encuentra el domicilio \\
-**postal_code** código postal de la dirección en la que se encuentra el domicilio \\
-**phone** teléfono del cliente, en este caso está vacío para todos los registros \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **address_id** identificador único de domicilio <br/>
+- **address** dirección <br/>
+- **address2** columna opcional para dirección adicional o datos adicionales de la dirección. En este caso esta vacía para todos los registros <br/>
+- **district** distrito en el que se ubica la dirección. Está vacío para todos los registros <br/>
+- **city_id** identificador único de la ciudad en la que se encuentra el domicilio <br/>
+- **postal_code** código postal de la dirección en la que se encuentra el domicilio <br/>
+- **phone** teléfono del cliente, en este caso está vacío para todos los registros <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### Category
-**category_id** identificador único de las categorías de las películas \\
-**name** nombre de la categorías de la películas \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **category_id** identificador único de las categorías de las películas <br/>
+- **name** nombre de la categorías de la películas <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### City
-**city_id** identificador único de la ciudad \\
-**city** nombre de la ciudad \\
-**country_id** identificador único del país \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **city_id** identificador único de la ciudad <br/>
+- **city** nombre de la ciudad <br/>
+- **country_id** identificador único del país <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### Country
-**country_id** identificador único del país \\
-**country** nombre del país \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **country_id** identificador único del país <br/>
+- **country** nombre del país <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### Customer
-**customer_id** identificador único de cada cliente \\
-**store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas \\
-**first_name** nombre del cliente \\
-**last_name** apellido del cliente \\
-**email** correo electrónico del cliente \\
-**address_id** identificador único de cada domicilio del cliente \\
-**activebool** en la documentación no hay descripción de esta variable. Se encuentra vacía en todos los registros \\
-**create_date** fecha en la que el cliente fue agregado al sistema \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
-**active** variable booleana que identifica si un cliente se enceuntra activo o no (1: activo y 0: inactivo) \\
+- **customer_id** identificador único de cada cliente <br/>
+- **store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas <br/>
+- **first_name** nombre del cliente <br/>
+- **last_name** apellido del cliente <br/>
+- **email** correo electrónico del cliente <br/>
+- **address_id** identificador único de cada domicilio del cliente <br/>
+- **activebool** en la documentación no hay descripción de esta variable. Se encuentra vacía en todos los registros <br/>
+- **create_date** fecha en la que el cliente fue agregado al sistema <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
+- **active** variable booleana que identifica si un cliente se enceuntra activo o no (1: activo y 0: inactivo) <br/>
 
 ### Film
-**film_id** identificador único de cada película \\
-**title** nombre o título de la película \\
-**description** una breve descripción de la película \\
-**release_year** fecha en la que fue lanzada la película \\
-**language_id** identificador del lenguaje de la película \\
-**original_language** lenguaje original de la película \\
-**rental_duration** duración del periodo de la renta medido en días \\
-**rental_rate** costo de renta de la peícula en el periodo especificado en la columna rental_duration \\
-**length** duración de la película medida en minutos \\
-**replacement_cost** monto cargado al cliente si la película no es regresada o si se devuelve dañada \\
-**rating** clasificación de la película. Puede ser uno de los siguientes: G, PG, PG-13, R, NC-17 \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
-**special_features** lista de las características especiales incluidas en el DVD. Puede ser: ningúna, una o una o más de las siguientes Trailers, Commentaries, Deleted Scenes, Behind the Scenes \\
+- **film_id** identificador único de cada película <br/>
+- **title** nombre o título de la película <br/>
+- **description** una breve descripción de la película <br/>
+- **release_year** fecha en la que fue lanzada la película <br/>
+- **language_id** identificador del lenguaje de la película <br/>
+- **original_language** lenguaje original de la película <br/>
+- **rental_duration** duración del periodo de la renta medido en días <br/>
+- **rental_rate** costo de renta de la peícula en el periodo especificado en la columna rental_duration <br/>
+- **length** duración de la película medida en minutos <br/>
+- **replacement_cost** monto cargado al cliente si la película no es regresada o si se devuelve dañada <br/>
+- **rating** clasificación de la película. Puede ser uno de los siguientes: G, PG, PG-13, R, NC-17 <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
+- **special_features** lista de las características especiales incluidas en el DVD. Puede ser: ningúna, una o una o más de las siguientes Trailers, Commentaries, Deleted Scenes, Behind the Scenes <br/>
 
 ### film_actor
-**actor_id** identificador único de cada actor \\
-**film_id** identificador único de cada película \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **actor_id** identificador único de cada actor <br/>
+- **film_id** identificador único de cada película <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### film_category
-**film_id** identificador único de cada película \\
-**category_id** identificador único de las categorías de las películas \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **film_id** identificador único de cada película <br/>
+- **category_id** identificador único de las categorías de las películas <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
+![Film_Categories](sakila_films_categories.png)
 
 ### inventory
-**inventory_id** identificador único de inventario de la tienda \\
-**film_id** identificador único de cada película \\
-**store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **inventory_id** identificador único de inventario de la tienda <br/>
+- **film_id** identificador único de cada película <br/>
+- **store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
+![Inventory](sakila_inventories.png)
 
 ### language
-**language_id** identificador del lenguaje de la película \\
-**name** idioma de la película. Solo hay seis idiomas: English. Italian, Japanese, Mandarin, French y German \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **language_id** identificador del lenguaje de la película <br/>
+- **name** idioma de la película. Solo hay seis idiomas: English. Italian, Japanese, Mandarin, French y German <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### payment
-**payment_id** identificador único de cada pago \\
-**costumer_id** identificador único de cada cliente \\
-**staff_id** identificador único del miembro del staff que procesó el pago. Sólo tiene 2 valores: 1 y 2 \\
-**rental_id** la renta a la que se le aplica el pago. Es opcional porque alguno pagos son por tarifas pendientes y pueden no estar directamente relacionados con la renta \\
-**amount** el monto del pago \\
-**payment_date** fecha en la que se procesó el pago \\
+- **payment_id** identificador único de cada pago <br/>
+- **costumer_id** identificador único de cada cliente <br/>
+- **staff_id** identificador único del miembro del staff que procesó el pago. Sólo tiene 2 valores: 1 y 2 <br/>
+- **rental_id** la renta a la que se le aplica el pago. Es opcional porque alguno pagos son por tarifas pendientes y pueden no estar directamente relacionados con la renta <br/>
+- **amount** el monto del pago <br/>
+- **payment_date** fecha en la que se procesó el pago <br/>
 
 ### staff
-**staff_id** identificador único del miembro del staff que procesó el pago. Sólo tiene 2 valores: 1 y 2 \\
-**first_name** nombre del miembro del staff \\
-**last_name** apellido del miembro del staff \\
-**address_id** identificador único de domicilio \\
-**email** correo electrónico del miembro del staff \\
-**store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas \\
-**active** variable booleana que identifica si el empleado se enceuntra activo o no (1: activo y 0: inactivo) \\
-**username** nombre de usuario del miembro del staff para acceder al sistema de rentas \\
-**password** contraseña usada por el miembro del staff para acceder al sistema de rentas \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
-**picture** BLOB que contiene la foto del empleado, en este caso vacío \\
+- **staff_id** identificador único del miembro del staff que procesó el pago. Sólo tiene 2 valores: 1 y 2 <br/>
+- **first_name** nombre del miembro del staff <br/>
+- **last_name** apellido del miembro del staff <br/>
+- **address_id** identificador único de domicilio <br/>
+- **email** correo electrónico del miembro del staff <br/>
+- **store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas <br/>
+- **active** variable booleana que identifica si el empleado se enceuntra activo o no (1: activo y 0: inactivo) <br/>
+- **username** nombre de usuario del miembro del staff para acceder al sistema de rentas <br/>
+- **password** contraseña usada por el miembro del staff para acceder al sistema de rentas <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
+- **picture** BLOB que contiene la foto del empleado, en este caso vacío <br/>
 
 ### rental
-**rental_id** la renta a la que se le aplica el pago. Es opcional porque algunos pagos son por tarifas pendientes y pueden no estar directamente relacionados con la renta \\
-**rental_date** fecha y hora en que se realizó la renta \\
-**inventory_id** identificador único de inventario de la tienda \\
-**customer_id** identificador único de cada cliente \\
-**return_date** fecha en la que se devolvió la película rentada \\
-**staff_id** identificador único del miembro del staff que procesó el pago. Sólo tiene 2 valores: 1 y 2 \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **rental_id** la renta a la que se le aplica el pago. Es opcional porque algunos pagos son por tarifas pendientes y pueden no estar directamente relacionados con la renta <br/>
+- **rental_date** fecha y hora en que se realizó la renta <br/>
+- **inventory_id** identificador único de inventario de la tienda <br/>
+- **customer_id** identificador único de cada cliente <br/>
+- **return_date** fecha en la que se devolvió la película rentada <br/>
+- **staff_id** identificador único del miembro del staff que procesó el pago. Sólo tiene 2 valores: 1 y 2 <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
 
 ### store
-**store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas \\
-**manager_staff_id** identificador único del gerente de la tienda \\
-**address_id** identificador único de domicilio \\
-**last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro \\
+- **store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas <br/>
+- **manager_staff_id** identificador único del gerente de la tienda <br/>
+- **address_id** identificador único de domicilio <br/>
+- **last_update** fecha en la que el registro fue creado o la más receinte actualización de dicho registro <br/>
+![Stores](sakila_stores.png)
 
+## Diagrama de Entidad Relación
 ![Diagrama_Entidad_Relación](sakila_database.png)
 
 ## Pipeline
+![Pipeline](sakila_pipeline.png)
 
 ## Instalación y Ejecución
-Clonar repositorio de github \\
+Clonar repositorio de github en máquina virtual de vagrant <br/>
 ```shell
 git clone https://github.com/Jasselpf/Sakila
 ```
-Crear entorno virtual sakila con python 3.7.3 \\
+Crear entorno virtual sakila con python 3.7.3 <br/>
 ```shell
 pyenv virtualenv 3.7.3 sakila
 ```
-Apuntar a carpeta para activar el ambiente virtual \\
+Apuntar a carpeta para activar el ambiente virtual <br/>
 ```shell
 echo 'sakila' > .python-version
 ```
-Instalar poetry \\
+Instalar poetry <br/>
 ```shell
 pip install poetry
 poetry install
 ```
-Crear usuario sakila \\
+Crear usuario sakila <br/>
 ```shell
 sudo su postgres
 createuser sakila -D -l -P
 createdb -O sakila sakila
 ```
-Crear esquemas \\
+Crear esquemas <br/>
 ```python
 cd sakila
 python sakila.py create-schemas
 ```
-Crear raw tables \\
+Crear raw tables <br/>
 ```python
 python sakila.py create-raw-tables
 python sakila.py load-sakila
 ```
-Crear raw tables \\
+Crear raw tables <br/>
 ```python
 python sakila.py create-raw-tables
 python sakila.py load-sakila
 ```
-Para revisar que se hayan creado las tablas en el esquema raw \\
+Para revisar que se hayan creado las tablas en el esquema raw <br/>
 ```shell
 \c sakila
 SET search_path TO raw; 
 \dt
 ```
-
-
-Crear tablas limpias
+Crear tablas limpias <br/>
 ```python
 python sakila.py to-cleaned
 ```
-Crear tablas semantic
+Crear tablas semantic <br/>
 ```python
 python sakila.py to-semantic
 ```
