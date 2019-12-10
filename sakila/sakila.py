@@ -59,9 +59,11 @@ def load_sakila(ctx):
 
 @sakila.command()
 @click.pass_context
-def to_cleaned():
+def to_cleaned(ctx):
     query = ctx.obj['queries'].get('to_cleaned')
-    print(query)
+    conn = ctx.obj['conn']
+    with conn.cursor() as cur:
+        cur.execute(query)
 
 @sakila.command()
 @click.pass_context
