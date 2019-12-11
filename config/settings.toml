@@ -1,0 +1,4 @@
+[default]
+dburl = 'postgresql://service=sakila'
+pgconnstring = 'user=sakila dbname=sakila port=5432 host=0.0.0.0 password=some_password'
+sakiladir = '/Sakila/sakila'
