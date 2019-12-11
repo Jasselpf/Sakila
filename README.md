@@ -145,6 +145,8 @@ La siguiente imagen muestra el número total de películas (inventario) para cada 
 ![Pipeline](sakila_pipeline.png)
 
 ## Instalación y Ejecución
+
+- Primeros pasos
 Clonar repositorio de github en máquina virtual de vagrant <br/>
 ```shell
 git clone https://github.com/Jasselpf/Sakila
@@ -175,17 +177,14 @@ sudo su postgres
 createuser sakila -D -l -P
 createdb -O sakila sakila
 ```
-Crear esquemas <br/>
+- Crear esquemas <br/>
+Se crean los esquemas a utilizar que son: raw, cleaned y semantic <br/>
 ```python
 cd sakila
 python sakila.py create-schemas
 ```
-Crear raw tables <br/>
-```python
-python sakila.py create-raw-tables
-python sakila.py load-sakila
-```
-Crear raw tables <br/>
+- Crear raw tables <br/>
+Se crean los esquemas de las tablas tal como estaban de origen y poniendo todos los campos como tipo texto. Se cargan los datos <br/>
 ```python
 python sakila.py create-raw-tables
 python sakila.py load-sakila
@@ -196,12 +195,23 @@ Para revisar que se hayan creado las tablas en el esquema raw <br/>
 SET search_path TO raw; 
 \dt
 ```
-Crear tablas limpias <br/>
+- Crear tablas limpias <br/>
+Se siguen las mejores prácticas vistas: se renombran las tablas y los campos, se asigna el tipo de dato correcto, los textos se pasan a minúsculas <br/>
 ```python
 python sakila.py to-cleaned
 ```
-Crear tablas semantic <br/>
+- Crear tablas semantic <br/>
 ```python
 python sakila.py to-semantic
 ```
+
+Nos planteamos responder las siguientes preguntas: <br/>
+1. ¿Cuántas rentas va a hacer el cliente? <br/>
+2. Predecir el monto de renta por cliente en un periodo <br/>
+
+Por tal motivo decidimos que nuestra **entidad** sería el *cliente* y los **eventos** que definimos relacionados a este son: <br/>
+1. Rentar película <br/>
+2. Devolver película <br/>
+
+
 
