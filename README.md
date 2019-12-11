@@ -149,6 +149,13 @@ Clonar repositorio de github en máquina virtual de vagrant <br/>
 ```shell
 git clone https://github.com/Jasselpf/Sakila
 ```
+Ubicarse en la carpeta Sakila clonada <br/>
+Ejecutar el archivo *set_up.sh* <br/>
+```shell
+./set_up.sh
+```
+Este archivo ejecutará los siguientes pasos: <br/>
+
 Crear entorno virtual sakila con python 3.7.3 <br/>
 ```shell
 pyenv virtualenv 3.7.3 sakila
