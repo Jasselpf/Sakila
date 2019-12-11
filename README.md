@@ -80,7 +80,7 @@ Licencia: [BSD Copyright DB Software Laboratory](http://www.etl-tools.com)
 - **last_update** fecha en la que el registro fue creado o la más reciente actualización de dicho registro <br/>
 
 La siguiente imagen muestra el número de películas por categoría: <br/>
-![Film_Categories](https://github.com/Jasselpf/Sakila/tree/master/pictures/sakila_films_categories.png)
+![Film_Categories](https://github.com/Jasselpf/Sakila/blob/master/pictures/sakila_films_categories.png)
 
 ### inventory
 - **inventory_id** identificador único de inventario de la tienda <br/>
@@ -89,7 +89,7 @@ La siguiente imagen muestra el número de películas por categoría: <br/>
 - **last_update** fecha en la que el registro fue creado o la más reciente actualización de dicho registro <br/>
 
 La siguiente imagen muestra el inventario por tienda y películas, por ejemplo, la tienda 1 tiene 3 copias de 232 películas: <br/>
-![Inventory](https://github.com/Jasselpf/Sakila/tree/master/pictures/sakila_inventories.png)
+![Inventory](https://github.com/Jasselpf/Sakila/blob/master/pictures/sakila_inventories.png)
 
 ### language
 - **language_id** identificador del idioma de la película <br/>
@@ -127,7 +127,7 @@ La siguiente imagen muestra el inventario por tienda y películas, por ejemplo, l
 - **last_update** fecha en la que el registro fue creado o la más reciente actualización de dicho registro <br/>
 
 La siguiente imagen muestra el número de rentas y de devoluciones por fecha: <br/>
-![Rentals](https://github.com/Jasselpf/Sakila/tree/master/pictures/sakila_rentals.png)
+![Rentals](https://github.com/Jasselpf/Sakila/blob/master/pictures/sakila_rentals.png)
 
 ### store
 - **store_id** identificador único de tienda. Sólo se tienen registros de dos tiendas <br/>
@@ -136,13 +136,13 @@ La siguiente imagen muestra el número de rentas y de devoluciones por fecha: <br
 - **last_update** fecha en la que el registro fue creado o la más reciente actualización de dicho registro <br/>
 
 La siguiente imagen muestra el número total de películas (inventario) para cada tienda: <br/>
-![Stores](https://github.com/Jasselpf/Sakila/tree/master/pictures/sakila_stores.png)
+![Stores](https://github.com/Jasselpf/Sakila/blob/master/pictures/sakila_stores.png)
 
 ## Diagrama de Entidad Relación
-![Diagrama_Entidad_Relación](https://github.com/Jasselpf/Sakila/tree/master/pictures/sakila_database.png)
+![Diagrama_Entidad_Relación](https://github.com/Jasselpf/Sakila/blob/master/pictures/sakila_database.png)
 
 ## Pipeline
-![Pipeline](https://github.com/Jasselpf/Sakila/tree/master/pictures/sakila_pipeline.png)
+![Pipeline](https://github.com/Jasselpf/Sakila/blob/master/pictures/sakila_pipeline.png)
 
 ## Instalación y Ejecución
 
