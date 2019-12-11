@@ -55,7 +55,27 @@ insert into semantic.events (customer, type, date, attributes)
 			join cleaned.films_categories fc on f.film = fc.film
 			join cleaned.categories c on fc.category =c.category
 			join cleaned.payments p on r.rental = p.rental
-
+	)
+	union all
+	(
+		select cu.customer,
+			'return'::event_type,
+			date(return_date) as return_date,
+			json_build_object(
+				'title',title,
+				'category', name, 
+				'store',cu.store,
+				'rental_rate',rental_rate,
+				'replacement_cost', replacement_cost,
+				'rating', rating,
+				'amount', amount) as attributes
+		from  cleaned.customers cu 
+			join cleaned.rentals r using(customer)
+			join cleaned.inventories i on r.inventory = i.inventory
+			join cleaned.films f on i.film = f.film
+			join cleaned.films_categories fc on f.film = fc.film
+			join cleaned.categories c on fc.category =c.category
+			join cleaned.payments p on r.rental = p.rental
 	);
 
 create index semantic_events_event_ix on semantic.events(event);
